@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="{{ path('home') }}">TodoList</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('home') }}">Accueil
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                   aria-expanded="false">Catégories</a>
+                <div class="dropdown-menu">
+                    {#{{ render(controller('App\\Controller\\CategoryController::getCategoryList')) }}#}
+                    {#{% for category in categoryRepository.findAll() %}#}
+                        {#<a class="dropdown-item"#}
+                           {#href="{{ path('category_show', {'slug':category.slug}) }}">{{ category.name }}</a>#}
+                    {#{% endfor %}#}
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            {#{% if app.user is not null %}#}
+                <li class="nav-item"><a href="" class="nav-link">Bienvenue </a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false">Mon compte</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="">Mes données</a>
+                        <a class="dropdown-item" href="">Mes Figures</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="{{ path('home') }}" class="btn btn-success">Ajouter une Figure</a>
+                </li>
+                <li>&nbsp;</li>
+                <li class="nav-item"><a href="{{ path('home') }}" class="btn btn-danger">Déconnexion</a></li>
+
+            {#{% else %}#}
+
+                <li class="nav-item"><a href="{{ path('home') }}" class="nav-link">Inscription</a></li>
+                <li class="nav-item"><a href="{{ path('home') }}" class="btn btn-success">Connexion</a></li>
+
+            {#{% endif %}#}
+        </ul>
+    </div>
+</nav>
