@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Creer un utilisateur{% endblock %}
+
+{% block body %}
+    {% include "shared/_flashSuccess.html.twig" %}
+    {% include "shared/_flashWarning.html.twig" %}
+    <h1> Ajouter un utilisateur</h1>
+
+    {{ form_start(formView) }}
+    {{ form_widget(formView) }}
+
+
+    <button type="submit" class="btn btn-success">Ajouter</button>
+    {{ form_end(formView) }}
+
+
+{% endblock %}
