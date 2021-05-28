@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    {% include "shared/_flashWarning.html.twig" %}
+    <h1>Inscription : </h1>
+    {{ form_start(formView) }}
+    {{ form_widget(formView) }}
+    <button type="submit" class="btn btn-success">Inscription !</button>
+    {{ form_end(formView) }}
+{% endblock %}
+

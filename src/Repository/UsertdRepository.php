@@ -23,6 +23,20 @@ class UsertdRepository extends ServiceEntityRepository implements PasswordUpgrad
     }
 
     /**
+     * @return User[] Returns an array of Trick objects
+     */
+
+    public function findByEmail($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.email = :val')
+            ->setParameter('val', $value)
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+    /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
     public function upgradePassword(UserInterface $user, string $newEncodedPassword): void

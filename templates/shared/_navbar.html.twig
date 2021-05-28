@@ -39,12 +39,12 @@
                 <li class="nav-item"><a href="{{ path('home') }}" class="btn btn-success">Ajouter une Figure</a>
                 </li>
                 <li>&nbsp;</li>
-                <li class="nav-item"><a href="{{ path('home') }}" class="btn btn-danger">Déconnexion</a></li>
+                <li class="nav-item"><a href="{{ path('security_logout') }}" class="btn btn-danger">Déconnexion</a></li>
 
             {#{% else %}#}
 
-                <li class="nav-item"><a href="{{ path('home') }}" class="nav-link">Inscription</a></li>
-                <li class="nav-item"><a href="{{ path('home') }}" class="btn btn-success">Connexion</a></li>
+                <li class="nav-item"><a href="{{ path('security_registration') }}" class="nav-link">Inscription</a></li>
+                <li class="nav-item"><a href="{{ path('security_login') }}" class="btn btn-success">Connexion</a></li>
 
             {#{% endif %}#}
         </ul>

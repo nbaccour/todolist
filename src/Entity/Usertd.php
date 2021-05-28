@@ -5,9 +5,12 @@ namespace App\Entity;
 use App\Repository\UsertdRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UsertdRepository::class)
+ * @UniqueEntity(fields={"email"}, message="Mon message ")
  */
 class Usertd implements UserInterface
 {
@@ -33,6 +36,16 @@ class Usertd implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+    /**
+     * @Assert\EqualTo(propertyPath="password",message="Les 2 mots de passe doivent correspondre", groups={"verif-pwd"})
+     */
+    private $verifPassword;
+
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
 
     public function getId(): ?int
     {
@@ -58,7 +71,7 @@ class Usertd implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -95,6 +108,18 @@ class Usertd implements UserInterface
         return $this;
     }
 
+    public function getVerifPassword(): ?string
+    {
+        return $this->verifPassword;
+    }
+
+    public function setVerifPassword(?string $verifPassword): self
+    {
+        $this->verifPassword = $verifPassword;
+
+        return $this;
+    }
+
     /**
      * Returning a salt is only needed, if you are not using a modern
      * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
@@ -113,5 +138,12 @@ class Usertd implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
     }
 }
