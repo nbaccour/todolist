@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}les utilisateurs{% endblock %}
+
+{% block body %}
+    {% include "shared/_flashSuccess.html.twig" %}
+    {% include "shared/_flashWarning.html.twig" %}
+    <h1> Liste des utilisateurs</h1>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col">Modifier</th>
+            <th scope="col">Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr class="table-active">
+                <th scope="row">{{ user.username }}</th>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles[0] }}</td>
+                <td><a class="dropdown-item" href="{{ path('user_modify',{'id':user.id}) }}"><i class="fa fa-edit"
+                                                                                                aria-hidden="true"></i></a>
+                </td>
+                <td><a class="dropdown-item" href="{{ path('user_delete',{'id':user.id}) }}"><i class="fa fa-trash"
+                                                                                                aria-hidden="true"></i></a>
+                </td>
+            </tr>
+            {#<tr>#}
+            {#<th scope="row">Default</th>#}
+            {#<td>Column content</td>#}
+            {#<td>Column content</td>#}
+            {#<td>Column content</td>#}
+            {#</tr>#}
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+{% endblock %}
+
+
