@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Task;
 use App\Entity\Usertd;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -58,6 +59,17 @@ class AppFixtures extends Fixture
 
             $manager->persist($user);
             $aUser[] = $user;
+        }
+
+        for ($u = 0; $u < 30; $u++) {
+            $task = new Task();
+            $task->setTitle($faker->jobTitle())
+                ->setContent($faker->paragraph())
+                ->setIsDone($faker->boolean())
+                ->setCreateAt($faker->dateTimeBetween('-6 months'))
+                ->setUsertd($faker->randomElement($aUser));
+
+            $manager->persist($task);
         }
 
         $manager->flush();

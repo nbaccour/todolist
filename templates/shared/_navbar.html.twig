@@ -25,6 +25,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ path('user_create') }}">Créer un utilisateur</a>
                             <a class="dropdown-item" href="{{ path('user_show') }}">Voir les utilisateurs</a>
+                            <a class="dropdown-item" href="{{ path('task_show') }}">Voir les taches</a>
                         </div>
                     </li>
                 {% else %}
@@ -34,7 +35,7 @@
                            aria-expanded="false">Gestion Compte</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ path('user_profile') }}">Mon compte</a>
-                            <a class="dropdown-item" href="{{ path('user_show') }}">Mes taches</a>
+                            <a class="dropdown-item" href="{{ path('task_mytask') }}">Mes taches</a>
                         </div>
                     </li>
                 {% endif %}

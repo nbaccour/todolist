@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}les utilisateurs{% endblock %}
+
+{% block body %}
+    {% include "shared/_flashSuccess.html.twig" %}
+    {% include "shared/_flashWarning.html.twig" %}
+    <h1> Liste des taches</h1>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Titre</th>
+            <th scope="col">Contenu</th>
+            <th scope="col">Propriétaire</th>
+            <th scope="col">Etat</th>
+            <th scope="col">Date</th>
+            <th scope="col">Modifier</th>
+            <th scope="col">Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            <tr class="table-active">
+                <th scope="row">{{ task.title }}</th>
+                <td>{{ task.content }}</td>
+                <td>{{ task.usertd.username }}</td>
+                <td>{% if task.isDone == 1 %}
+                        Fermé
+                    {% else %}
+                        Ouvert
+                    {% endif %}
+                </td>
+                <td>{{ task.createAt | date('d/m/Y') }}</td>
+                <td>{% if task.isDone == 0 %}
+                        <a class="dropdown-item" href="{{ path('task_modify',{'id':task.id}) }}"><i class="fa fa-edit"
+                                                                                                    aria-hidden="true"></i></a>
+                    {% endif %}
+                </td>
+                <td><a class="dropdown-item" href="{{ path('task_delete',{'id':task.id}) }}"><i class="fa fa-trash"
+                                                                                                aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+{% endblock %}
+
+
