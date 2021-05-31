@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Usertd;
+use App\Form\ResetPasswordType;
 use App\Form\UsermodifyType;
 use App\Form\UserType;
 use App\Repository\UsertdRepository;
@@ -11,6 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class UserController extends AbstractController
 {
@@ -18,13 +22,16 @@ class UserController extends AbstractController
 
     protected $userRepository;
     protected $manager;
+    protected $encoder;
 
     public function __construct(
         UsertdRepository $userRepository,
-        EntityManagerInterface $manager
+        EntityManagerInterface $manager,
+        UserPasswordEncoderInterface $encoder
     ) {
         $this->userRepository = $userRepository;
         $this->manager = $manager;
+        $this->encoder = $encoder;
     }
 
     /**
@@ -78,7 +85,7 @@ class UserController extends AbstractController
         $create = $this->createOrUpdate($form, $user);
 
         if ($create === true) {
-//            return $this->redirectToRoute("user_show");
+            return $this->redirectToRoute("user_show");
         }
 
 
@@ -118,7 +125,7 @@ class UserController extends AbstractController
 
         $modify = $this->createOrUpdate($form, $user, 'modify');
         if ($modify === true) {
-//            return $this->redirectToRoute("user_list");
+            return $this->redirectToRoute("user_show");
         }
 
 
@@ -159,6 +166,51 @@ class UserController extends AbstractController
         return $this->redirectToRoute("user_show");
     }
 
+    /**
+     * @Route("/profile", name="user_profile")
+     * @IsGranted("ROLE_USER", message="Vous devez etres connecté pour acceder à vos données")
+     */
+    public function profile(Request $request)
+    {
+        $user = $this->getUser();
+
+
+        $formResetPwd = $this->createForm(ResetPasswordType::class, [],
+            ['action' => $this->generateUrl('user_resetPassword')]);
+
+        return $this->render("/user/profile.html.twig",
+            [
+                'user'         => $user,
+                'formPassword' => $formResetPwd->createView(),
+            ]);
+
+
+    }
+
+    /**
+     * @Route("/resetpwd", name="user_resetPassword")
+     * @IsGranted("ROLE_USER", message="Vous devez etres connecté pour acceder à vos données")
+     */
+    public function resetPassword(Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(ResetPasswordType::class, $user, ['validation_groups' => 'verif-pwd']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+//            dump($user);
+//            dd($user->getPassword());
+            $hash = $this->encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
+
+            $this->manager->flush();
+
+            $this->addFlash('success', "Votre mot de passe a été modifié");
+
+        }
+        return $this->render("/user/profile.html.twig", ['user' => $user, 'formPassword' => $form->createView()]);
+
+    }
 
     public function createOrUpdate($form, $user, string $type = 'create')
     {
