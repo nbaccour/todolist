@@ -8,6 +8,7 @@ use App\Form\UsermodifyType;
 use App\Form\UserType;
 use App\Repository\UsertdRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,41 +24,54 @@ class UserController extends AbstractController
     protected $userRepository;
     protected $manager;
     protected $encoder;
+    protected $paginator;
 
     public function __construct(
         UsertdRepository $userRepository,
         EntityManagerInterface $manager,
-        UserPasswordEncoderInterface $encoder
+        UserPasswordEncoderInterface $encoder,
+        PaginatorInterface $paginator
     ) {
         $this->userRepository = $userRepository;
         $this->manager = $manager;
         $this->encoder = $encoder;
+        $this->paginator = $paginator;
     }
 
     /**
-     * @Route("/users", name="user_show")
+     * @Route("/admin/users", name="user_show")
      */
-    public function show(): Response
+    public function show(Request $request): Response
     {
 
-        $userConnect = $this->getUser();
-        if (!$userConnect) {
-            return $this->redirectToRoute("security_login");
-        }
-        if (in_array('ROLE_ADMIN', $userConnect->getRoles()) === false) {
-
-            $this->addFlash("warning",
-                "Accès refusé : vous devez avoir un rôle administrateur");
-            return $this->redirectToRoute("home");
-        }
+//        $userConnect = $this->getUser();
+//        if (!$userConnect) {
+//            return $this->redirectToRoute("security_login");
+//        }
+//        if ($this->isGranted('ROLE_ADMIN') === false) {
+////        if (in_array('ROLE_ADMIN', $userConnect->getRoles()) === false) {
+//
+//            $this->addFlash("warning",
+//                "Accès refusé : vous devez avoir un rôle administrateur");
+//            return $this->redirectToRoute("home");
+//        }
+        $this->denyAccessUnlessGranted("ROLE_ADMIN", null, "Accès refusé : vous devez avoir un rôle administrateur");
         $users = $this->userRepository->findAll();
-        return $this->render('/user/list.html.twig', ['users' => $users]);
+
+        $usersList = $this->paginator->paginate(
+            $users, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            6 // Nombre de résultats par page
+        );
+
+
+        return $this->render('/user/list.html.twig', ['users' => $usersList]);
 
 
     }
 
     /**
-     * @Route("/user/create", name="user_create")
+     * @Route("/admin/user/create", name="user_create")
      */
     public function create(Request $request): Response
     {
@@ -95,7 +109,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/modify/{id}", name="user_modify")
+     * @Route("/admin/user/modify/{id}", name="user_modify")
      */
     public function modify($id, Request $request)
     {
@@ -134,7 +148,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/delete/{id}", name="user_delete")
+     * @Route("/admin/user/delete/{id}", name="user_delete")
      */
     public function delete($id)
     {

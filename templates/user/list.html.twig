@@ -30,17 +30,13 @@
                                                                                                 aria-hidden="true"></i></a>
                 </td>
             </tr>
-            {#<tr>#}
-            {#<th scope="row">Default</th>#}
-            {#<td>Column content</td>#}
-            {#<td>Column content</td>#}
-            {#<td>Column content</td>#}
-            {#</tr>#}
         {% endfor %}
 
         </tbody>
     </table>
-
+    <div class="pagination pagination-lg">
+        {{ knp_pagination_render(users) }}
+    </div>
 
 {% endblock %}
 

@@ -18,6 +18,7 @@
             <th scope="col">Etat</th>
             <th scope="col">Date</th>
             <th scope="col">Modifier</th>
+            <th scope="col">Supprimer</th>
         </tr>
         </thead>
         <tbody>
@@ -33,10 +34,13 @@
                 </td>
                 <td>{{ task.createAt | date('d/m/Y') }}</td>
                 <td>
-                    {% if task.isDone == 0 %}
+                    {#{% if task.isDone == 0 %}#}
                         <a class="dropdown-item" href="{{ path('task_modify',{'id':task.id}) }}"><i class="fa fa-edit"
                                                                                                     aria-hidden="true"></i></a>
-                    {% endif %}
+                    {#{% endif %}#}
+                </td>
+                <td><a class="dropdown-item" href="{{ path('task_delete',{'id':task.id}) }}"><i class="fa fa-trash"
+                                                                                                aria-hidden="true"></i></a>
                 </td>
             </tr>
         {% endfor %}

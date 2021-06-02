@@ -40,7 +40,7 @@ class UserType extends AbstractType
                     'attr'  => ['placeholder' => 'Répétez le mot de passe'],
                 ])
             ->add('roles', ChoiceType::class, [
-                'label'       => 'Role',
+                'label'       => 'Rôle',
                 'placeholder' => '-- choisir un role --',
                 'choices'     => [
                     'administrateur' => 'ROLE_ADMIN',

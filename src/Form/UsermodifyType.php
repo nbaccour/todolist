@@ -29,7 +29,7 @@ class UsermodifyType extends AbstractType
             ->add('email', EmailType::class,
                 ['label' => 'Adresse email', 'attr' => ['placeholder' => 'Adresse email']])
             ->add('roles', ChoiceType::class, [
-                'label'       => 'Role',
+                'label'       => 'Rôle',
                 'placeholder' => '-- choisir un role --',
                 'choices'     => [
                     'administrateur' => 'ROLE_ADMIN',
