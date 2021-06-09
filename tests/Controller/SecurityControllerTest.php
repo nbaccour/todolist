@@ -9,30 +9,66 @@
 namespace App\Tests\Controller;
 
 
+use Symfony\Component\HttpFoundation\Request;
 
 class SecurityControllerTest extends AbstractControllerTest
 {
+
+//    protected $request;
+//
+//    public function __construct(Request $request = null)
+//    {
+//        $this->setRequest($request);
+//    }
+
+    public function testLoginAsAdmin()
+    {
+
+        $crawler = $this->client->request('GET', '/login');
+        static::assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        // Test if login field exists
+        static::assertSame(1, $crawler->filter('input[name="login[email]"]')->count());
+        static::assertSame(1, $crawler->filter('input[name="login[password]"]')->count());
+
+        $form = $crawler->selectButton('Connexion')->form();
+        $form['login[email]'] = 'admin@gmail.com';
+        $form['login[password]'] = 'password';
+        $this->client->submit($form);
+
+        $crawler = $this->client->followRedirect();
+        static::assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        // Test if home page text when authenticated exists
+        static::assertSame("Bienvenue sur Todo List", $crawler->filter('h1')->text());
+        // Return the client to reuse the authenticated user admin it in others functionnal tests
+        return $this->client;
+
+    }
+
     public function testLoginWithValidData(): void
     {
-        $crawler = $this->client->request('GET', '/login');
-        self::assertEquals(200, $this->client->getResponse()->getStatusCode());
-        self::assertCount(3, $crawler->filter('input'));
-        self::assertContains('CONNEXION', $crawler->filter('btn btn-success')->text());
 
-//        $this->loginWithAdmin();
-//
-//        self::assertEquals(302, $this->client->getResponse()->getStatusCode());
-//        $crawler = $this->client->followRedirect();
-//
-//        self::assertContains('Créer une nouvelle tâche', $crawler->filter('a.btn.btn-success.btn-sm.mb-2')->text());
-//        self::assertContains(
-//            'Consulter la liste des tâches à faire',
-//            $crawler->filter('a.btn.btn-info.btn-sm.mb-2')->text()
-//        );
-//        self::assertContains(
-//            "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !",
-//            $crawler->filter('h1')->text()
-//        );
+        $crawler = $this->client->request('GET', '/login');
+        static::assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        // Test if login field exists
+        static::assertSame(1, $crawler->filter('input[name="login[email]"]')->count());
+        static::assertSame(1, $crawler->filter('input[name="login[password]"]')->count());
+
+        $form = $crawler->selectButton('Connexion')->form();
+        $form['login[email]'] = 'user0@gmail.com';
+        $form['login[password]'] = 'password';
+        $this->client->submit($form);
+
+        $crawler = $this->client->followRedirect();
+        static::assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        // Test if home page text when authenticated exists
+        static::assertSame("Bienvenue sur Todo List", $crawler->filter('h1')->text());
+
+
     }
+
 
 }

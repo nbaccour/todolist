@@ -8,26 +8,41 @@
 
 namespace App\Tests\Controller;
 
-use App\Repository\UsertdRepository;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class UserControllerTest extends KernelTestCase
+use App\Repository\UsertdRepository;
+
+class UserControllerTest extends AbstractControllerTest
 {
 
-    public function testShow()
+    /** @var UserRepository */
+    protected $userRepository;
+
+    protected function setUp(): void
     {
-//        $kernel = self::bootkernel();
-//        $kernel->getContainer();
-
-        self::bootkernel();
-        $users = self::$container->get(UsertdRepository::class)->count([]);
-        $this->assertEquals(13, $users);
-
-
+        parent::setUp();
+        $this->userRepository = self::$container->get(UsertdRepository::class);
     }
 
-//    public function testCreate()
-//    {
-//
-//    }
+    public function testListActionWithoutLogin()
+    {
+        // If the user isn't logged, should redirect to the login page
+        $this->client->request('GET', '/admin/users');
+        static::assertSame(302, $this->client->getResponse()->getStatusCode());
+
+        $crawler = $this->client->followRedirect();
+        // Test if login field exists
+        static::assertSame(1, $crawler->filter('input[name="login[email]"]')->count());
+        static::assertSame(1, $crawler->filter('input[name="login[password]"]')->count());
+    }
+
+    public function testListAction()
+    {
+        $securityControllerTest = new SecurityControllerTest();
+        $client = $securityControllerTest->testLoginAsAdmin();
+
+        $crawler = $client->request('GET', '/admin/users');
+        static::assertSame(200, $client->getResponse()->getStatusCode());
+        static::assertSame("Liste des utilisateurs", $crawler->filter('h1')->text());
+    }
+
 }
