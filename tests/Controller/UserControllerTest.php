@@ -35,14 +35,30 @@ class UserControllerTest extends AbstractControllerTest
         static::assertSame(1, $crawler->filter('input[name="login[password]"]')->count());
     }
 
-    public function testListAction()
-    {
-        $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginAsAdmin();
+//    public function testListAction()
+//    {
+//        $securityControllerTest = new SecurityControllerTest();
+//        $client = $securityControllerTest->testLoginAsAdmin();
+//
+//        $crawler = $client->request('GET', '/admin/users');
+//        static::assertSame(200, $client->getResponse()->getStatusCode());
+//        static::assertSame("Liste des utilisateurs", $crawler->filter('h1')->text());
+//    }
 
-        $crawler = $client->request('GET', '/admin/users');
-        static::assertSame(200, $client->getResponse()->getStatusCode());
-        static::assertSame("Liste des utilisateurs", $crawler->filter('h1')->text());
+
+    public function testList(): void
+    {
+        $this->client->request('GET', '/admin/users');
+        self::assertEquals(302, $this->client->getResponse()->getStatusCode());
+
+        $this->loginWithAdmin();
+//        $securityControllerTest = new SecurityControllerTest();
+//        $securityControllerTest->testLoginAsAdmin();
+
+        $crawler = $this->client->request('GET', '/users');
+        self::assertEquals(200, $this->client->getResponse()->getStatusCode());
+        self::assertContains('Liste des utilisateurs', $crawler->filter('h1')->text());
+//        self::assertContains('Edit', $crawler->filter('a.btn.btn-success')->text());
     }
 
 }
