@@ -42,7 +42,7 @@ class ErrorSecurityControllerTest extends AbstractControllerTest
 
         $buttonCrawlerMode = $crawler->filter('form');
         $form = $buttonCrawlerMode->form([
-            'login[email]' => 'user0@gmail.com',
+            'login[email]' => 'demo@gmail.com',
             'login[password]' => 'test'
         ]);
 

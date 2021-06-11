@@ -160,7 +160,7 @@ class TaskController extends AbstractController
         $this->manager->remove($task);
         $this->manager->flush();
 
-        $this->addFlash("warning", "La tache a bien été suprimée ");
+        $this->addFlash("warning", "La tâche a bien été supprimée.");
 
         return $this->redirectToRoute("task_mytask");
     }
@@ -190,7 +190,7 @@ class TaskController extends AbstractController
             }
             $this->manager->persist($task);
             $this->manager->flush();
-            $msg = ($type === 'create') ? "La tâche a été bien été ajoutée." : "Tache modifiée";
+            $msg = ($type === 'create') ? "La tâche a été bien été ajoutée." : "La tâche a bien été modifiée.";
             $this->addFlash('success', $msg);
 
             $return = true;
