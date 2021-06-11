@@ -190,7 +190,7 @@ class TaskController extends AbstractController
             }
             $this->manager->persist($task);
             $this->manager->flush();
-            $msg = ($type === 'create') ? "Tache ajoutée" : "Tache modifiée";
+            $msg = ($type === 'create') ? "La tâche a été bien été ajoutée." : "Tache modifiée";
             $this->addFlash('success', $msg);
 
             $return = true;

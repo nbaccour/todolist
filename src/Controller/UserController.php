@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Task;
 use App\Entity\Usertd;
 use App\Form\ResetPasswordType;
 use App\Form\UsermodifyType;
 use App\Form\UserType;
+use App\Repository\TaskRepository;
 use App\Repository\UsertdRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -25,17 +27,20 @@ class UserController extends AbstractController
     protected $manager;
     protected $encoder;
     protected $paginator;
+    protected $taskRepository;
 
     public function __construct(
         UsertdRepository $userRepository,
         EntityManagerInterface $manager,
         UserPasswordEncoderInterface $encoder,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        TaskRepository $taskRepository
     ) {
         $this->userRepository = $userRepository;
         $this->manager = $manager;
         $this->encoder = $encoder;
         $this->paginator = $paginator;
+        $this->taskRepository = $taskRepository;
     }
 
     /**
@@ -44,17 +49,6 @@ class UserController extends AbstractController
     public function show(Request $request): Response
     {
 
-//        $userConnect = $this->getUser();
-//        if (!$userConnect) {
-//            return $this->redirectToRoute("security_login");
-//        }
-//        if ($this->isGranted('ROLE_ADMIN') === false) {
-////        if (in_array('ROLE_ADMIN', $userConnect->getRoles()) === false) {
-//
-//            $this->addFlash("warning",
-//                "Accès refusé : vous devez avoir un rôle administrateur");
-//            return $this->redirectToRoute("home");
-//        }
         $this->denyAccessUnlessGranted("ROLE_ADMIN", null, "Accès refusé : vous devez avoir un rôle administrateur");
         $users = $this->userRepository->findAll();
 
@@ -153,22 +147,18 @@ class UserController extends AbstractController
     public function delete($id)
     {
 
-        $userConnect = $this->getUser();
-        if (!$userConnect) {
-            return $this->redirectToRoute("security_login");
-        }
-        if (in_array('ROLE_ADMIN', $userConnect->getRoles()) === false) {
-
-            $this->addFlash("warning",
-                "Accès refusé : vous devez avoir un rôle administrateur");
-            return $this->redirectToRoute("home");
-        }
+        $this->denyAccessUnlessGranted("ROLE_ADMIN", null, "Accès refusé : vous devez avoir un rôle administrateur");
 
 
         $user = $this->userRepository->find($id);
 
         if (!$user) {
             throw $this->createNotFoundException("L'utilisateur $id n'existe pas");
+        }
+        $tasks = $user->getTask();
+        //delete tasks user
+        foreach ($tasks as $task) {
+            $this->manager->remove($task);
         }
 
 
@@ -247,7 +237,7 @@ class UserController extends AbstractController
 
             $this->manager->persist($user);
             $this->manager->flush();
-            $msg = ($type === 'create') ? "Utilisateur ajouté" : "Utilisateur modifié";
+            $msg = ($type === 'create') ? "L'utilisateur a bien été ajouté." : "L'utilisateur a bien été modifié";
             $this->addFlash('success', $msg);
 
             $return = true;

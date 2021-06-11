@@ -57,7 +57,7 @@ class SecurityControllerTest extends AbstractControllerTest
         static::assertSame(1, $crawler->filter('input[name="login[password]"]')->count());
 
         $form = $crawler->selectButton('Connexion')->form();
-        $form['login[email]'] = 'user0@gmail.com';
+        $form['login[email]'] = 'user4@gmail.com';
         $form['login[password]'] = 'password';
         $this->client->submit($form);
 
