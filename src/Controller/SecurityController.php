@@ -39,46 +39,4 @@ class SecurityController extends AbstractController
 
     }
 
-
-    /**
-     * @Route("registration", name="security_registration")
-     */
-    public function registration(
-        Request $request,
-        EntityManagerInterface $manager,
-        UserPasswordEncoderInterface $encoder,
-        UsertdRepository $userRepository
-    ) {
-        $user = new Usertd();
-        $form = $this->createForm(RegistrationType::class, $user, ['validation_groups' => 'verif-pwd']);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $emailUser = $userRepository->findByEmail($user->getEmail());
-            if (count($emailUser) !== 0) {
-                $this->addFlash("warning",
-                    "Erreur : Email existe : '" . $user->getEmail() . "' ");
-                return $this->redirectToRoute("security_registration");
-            }
-
-            $password = $encoder->encodePassword($user, $user->getPassword());
-
-
-            $user->setPassword($password);
-
-            $manager->persist($user);
-            $manager->flush();
-            $this->addFlash(
-                'success',
-                "Compte crée avec succès ! "
-            );
-
-            return $this->redirectToRoute('security_login');
-        }
-
-        return $this->render('security/registration.html.twig',
-            ['formView' => $form->createView()]);
-    }
 }

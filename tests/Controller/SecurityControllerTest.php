@@ -9,17 +9,11 @@
 namespace App\Tests\Controller;
 
 
-use Symfony\Component\HttpFoundation\Request;
 
 class SecurityControllerTest extends AbstractControllerTest
 {
 
-//    protected $request;
-//
-//    public function __construct(Request $request = null)
-//    {
-//        $this->setRequest($request);
-//    }
+
 
     public function testLoginAsAdmin()
     {
@@ -67,7 +61,7 @@ class SecurityControllerTest extends AbstractControllerTest
         // Test if home page text when authenticated exists
         static::assertSame("Bienvenue sur Todo List", $crawler->filter('h1')->text());
 
-
+//        echo $this->client->getResponse()->getContent();
     }
 
 

@@ -22,6 +22,7 @@
 # Tests unitaires
 
 Des tests unitaires et fonctionnels sont présents dans le projet dans le répertoire /tests 
+
 `php bin/phpunit`
 
 # Qualité du code

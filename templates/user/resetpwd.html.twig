@@ -5,14 +5,17 @@
 {% block body %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('home') }}">Accueil</a></li>
-        <li class="breadcrumb-item active">Mon compte</li>
+        <li class="breadcrumb-item active">Modifier mon mot de passse</li>
     </ol>
     {% include "shared/_flashSuccess.html.twig" %}
     <div class="card border-primary mb-3" style="max-width: 80rem;">
-        <div class="card-header">Mes données</div>
+        <div class="card-header">Modifier mon Mot de passe</div>
         <div class="card-body">
-            <h4 class="card-title">{{ user.username }}</h4>
-            <h4 class="card-title">{{ user.email }}</h4>
+            {{ form_start(formPassword) }}
+            {{ form_widget(formPassword) }}
+            <button type="submit" class="btn btn-success">Modifier</button>
+            {{ form_end(formPassword) }}
         </div>
+
     </div>
 {% endblock %}

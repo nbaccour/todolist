@@ -39,10 +39,11 @@ class TaskController extends AbstractController
     public function show(Request $request): Response
     {
 
-        $userConnect = $this->getUser();
-        if (!$userConnect) {
-            return $this->redirectToRoute("security_login");
-        }
+//        $userConnect = $this->getUser();
+//        if (!$userConnect) {
+//            return $this->redirectToRoute("security_login");
+//        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, "Accès refusé : vous devez etre connecté");
         $tasks = $this->repository->findBy([], ['id' => 'DESC']);
 
         $tasksList = $this->paginator->paginate(
@@ -59,11 +60,10 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/mytask", name="task_mytask")
-     * @IsGranted("ROLE_USER", message="Vous devez etres connecté pour acceder à vos figures")
      */
     public function mytask()
     {
-
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, "Accès refusé : vous devez etre connecté");
         $user = $this->getUser();
         return $this->render('/user/mytask.html.twig', ['tasks' => $user->getTask()]);
 
@@ -76,10 +76,8 @@ class TaskController extends AbstractController
      */
     public function create(Request $request)
     {
-        $userConnect = $this->getUser();
-        if (!$userConnect) {
-            return $this->redirectToRoute("security_login");
-        }
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, "Accès refusé : vous devez etre connecté");
 
         $task = new Task();
 
@@ -107,10 +105,7 @@ class TaskController extends AbstractController
     public function modify($id, Request $request, Security $security)
     {
 
-        $userConnect = $this->getUser();
-        if (!$userConnect) {
-            return $this->redirectToRoute("security_login");
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, "Accès refusé : vous devez etre connecté");
 
         $task = $this->repository->find($id);
 
@@ -118,7 +113,6 @@ class TaskController extends AbstractController
             throw $this->createNotFoundException("La tache $id n'existe pas");
         }
 
-//        $this->isGranted('CAN_EDIT', $task);
         $this->denyAccessUnlessGranted('CAN_EDIT', $task, "Vous n'êtes pas le propriétaire de cette tache");
 
 
@@ -145,10 +139,7 @@ class TaskController extends AbstractController
     public function delete($id)
     {
 
-        $userConnect = $this->getUser();
-        if (!$userConnect) {
-            return $this->redirectToRoute("security_login");
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, "Accès refusé : vous devez etre connecté");
 
         $task = $this->repository->find($id);
 
@@ -168,23 +159,14 @@ class TaskController extends AbstractController
     public function createOrUpdate($form, $task, string $type = 'create')
     {
 
-        $userConnect = $this->getUser();
-        if (!$userConnect) {
-            return $this->redirectToRoute("security_login");
-        }
-//        if (in_array('ROLE_ADMIN', $userConnect->getRoles()) === false) {
-//
-//            $this->addFlash("warning",
-//                "Accès refusé : vous devez avoir un rôle administrateur");
-//            return $this->redirectToRoute("home");
-//        }
-
+        $user = $this->getUser();
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, "Accès refusé : vous devez etre connecté");
 
         $return = false;
         if ($form->isSubmitted() && $form->isValid()) {
 
             if ($type === 'create') {
-                $task->setUsertd($userConnect)
+                $task->setUsertd($user)
                     ->setCreateAt(new \DateTime())
                     ->setIsDone(0);
             }

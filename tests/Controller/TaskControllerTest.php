@@ -37,12 +37,24 @@ class TaskControllerTest extends AbstractControllerTest
         static::assertSame("Liste des taches", $crawler->filter('h1')->text());
     }
 
+    public function testMyTask(): void
+    {
+        $this->client->request('GET', '/mytask');
+        self::assertEquals(302, $this->client->getResponse()->getStatusCode());
+
+        $this->loginWithAdmin();
+
+        $crawler = $this->client->request('GET', '/mytask');
+        self::assertEquals(200, $this->client->getResponse()->getStatusCode());
+        static::assertSame("Mes Taches :", $crawler->filter('h1')->text());
+    }
+
     public function testCreate(): void
     {
         $this->client->request('GET', '/tasks/create');
         self::assertEquals(302, $this->client->getResponse()->getStatusCode());
 
-        $this->loginWithUser();
+        $this->loginWithAdmin();
 
         $crawler = $this->client->request('GET', '/tasks/create');
         self::assertEquals(200, $this->client->getResponse()->getStatusCode());
@@ -72,12 +84,12 @@ class TaskControllerTest extends AbstractControllerTest
 
     public function testEdit(): void
     {
-        $this->client->request('GET', '/tasks/modify/62');
+        $this->client->request('GET', '/tasks/modify/61');
         self::assertEquals(302, $this->client->getResponse()->getStatusCode());
 
-        $this->loginWithUser();
+        $this->loginWithAdmin();
 
-        $crawler = $this->client->request('GET', '/tasks/modify/62');
+        $crawler = $this->client->request('GET', '/tasks/modify/61');
         self::assertEquals(200, $this->client->getResponse()->getStatusCode());
         self::assertCount(3, $crawler->filter('input'));
         self::assertEquals('Modifier les données de la tache', $crawler->filter('button.btn.btn-success')->text());
@@ -106,12 +118,12 @@ class TaskControllerTest extends AbstractControllerTest
 
 //    public function testDelete(): void
 //    {
-//        $this->client->request('DELETE', '/tasks/delete/64');
+//        $this->client->request('DELETE', '/tasks/delete/68');
 //        self::assertEquals(302, $this->client->getResponse()->getStatusCode());
 //
-//        $this->loginWithUser();
+//        $this->loginWithAdmin();
 //
-//        $this->client->request('DELETE', '/tasks/delete/64  ');
+//        $this->client->request('DELETE', '/tasks/delete/68');
 //        self::assertEquals(302, $this->client->getResponse()->getStatusCode());
 //        $crawler = $this->client->followRedirect();
 //        self::assertEquals('task_mytask', $this->client->getRequest()->get('_route'));
