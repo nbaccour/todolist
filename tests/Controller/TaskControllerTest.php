@@ -116,23 +116,23 @@ class TaskControllerTest extends AbstractControllerTest
         self::assertEquals('Description de la tâche modif', $task->getContent());
     }
 
-//    public function testDelete(): void
-//    {
-//        $this->client->request('DELETE', '/tasks/delete/68');
-//        self::assertEquals(302, $this->client->getResponse()->getStatusCode());
-//
-//        $this->loginWithAdmin();
-//
-//        $this->client->request('DELETE', '/tasks/delete/68');
-//        self::assertEquals(302, $this->client->getResponse()->getStatusCode());
-//        $crawler = $this->client->followRedirect();
-//        self::assertEquals('task_mytask', $this->client->getRequest()->get('_route'));
-//        self::assertEquals(
-//            'La tâche a bien été supprimée.',
-//            $crawler->filter('div.alert.alert-warning')->text(null, true)
-//        );
-//
-//        $task = $this->taskRepository->findOneBy(['title' => 'tache de test']);
-//        self::assertEmpty($task);
-//    }
+    public function testDelete(): void
+    {
+        $this->client->request('DELETE', '/tasks/delete/61');
+        self::assertEquals(302, $this->client->getResponse()->getStatusCode());
+
+        $this->loginWithAdmin();
+
+        $this->client->request('DELETE', '/tasks/delete/61');
+        self::assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $crawler = $this->client->followRedirect();
+        self::assertEquals('task_mytask', $this->client->getRequest()->get('_route'));
+        self::assertEquals(
+            'La tâche a bien été supprimée.',
+            $crawler->filter('div.alert.alert-warning')->text(null, true)
+        );
+
+        $task = $this->taskRepository->findOneBy(['title' => 'tache de test']);
+        self::assertEmpty($task);
+    }
 }

@@ -19,6 +19,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+
+use OpenApi\Annotations as OA;
+
 class UserController extends AbstractController
 {
 
@@ -44,6 +47,20 @@ class UserController extends AbstractController
     }
 
     /**
+     * @OA\Get(
+     *     path="/admin/users",
+     *     tags={"Users"},
+     *     security={"bearer"},
+     *     @OA\Response(
+     *          response="200",
+     *          description="liste des utilisateurs",
+     *          @OA\JsonContent(type="array",@OA\Items(ref="#/components/schemas/Users")),
+     *      ),
+     *      @OA\Response(
+     *          response="404",
+     *          ref="#/components/responses/NotFound"),
+     *      )
+     *)
      * @Route("/admin/users", name="user_show")
      */
     public function show(Request $request): Response
