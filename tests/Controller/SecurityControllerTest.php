@@ -9,10 +9,8 @@
 namespace App\Tests\Controller;
 
 
-
 class SecurityControllerTest extends AbstractControllerTest
 {
-
 
 
     public function testLoginAsAdmin()
@@ -34,7 +32,7 @@ class SecurityControllerTest extends AbstractControllerTest
         static::assertSame(200, $this->client->getResponse()->getStatusCode());
 
         // Test if home page text when authenticated exists
-        static::assertSame("Bienvenue sur Todo List", $crawler->filter('h1')->text());
+        static::assertSame("Liste des tâches", $crawler->filter('h1')->text());
         // Return the client to reuse the authenticated user admin it in others functionnal tests
         return $this->client;
 
@@ -59,9 +57,18 @@ class SecurityControllerTest extends AbstractControllerTest
         static::assertSame(200, $this->client->getResponse()->getStatusCode());
 
         // Test if home page text when authenticated exists
-        static::assertSame("Bienvenue sur Todo List", $crawler->filter('h1')->text());
+        static::assertSame("Liste des tâches", $crawler->filter('h1')->text());
 
 //        echo $this->client->getResponse()->getContent();
+    }
+
+    public function testLogout()
+    {
+        $crawler = $this->client->request('POST', '/logout');
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+
+        static::assertSame("Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !",
+            $crawler->filter('h1')->text());
     }
 
 

@@ -1,5 +1,6 @@
 # Projet : Améliorez une application existante de ToDo & Co
 
+## Guide à l'usage de l'équipe qui reprendra ce projet pour que le travail à plusieurs se passe de la meilleure façon possible.
 
 # Avant propos
 - Le projet fonctionne sur PHP 7.4.13
@@ -9,10 +10,10 @@
 # Comment Contribuer au projet
 
 1. Cloner et Installer le repository sur votre serveur (voir le README.md)
-2. Créez une branche à partir de *master* avec la fonction sur laquelle vous intervenez
+2. Créez une branche à partir de *master* : git checkout -b <nom de la branche>
 3. Ecrivez un Issue sur les modifications que vous allez apporter
 4. Ecrivez votre code EN RESPECTANT LES BONNES PRATIQUES
-5. Ecrivez des Commit Clairs et precis avant de faire un Push de la branche
+5. Ecrivez des Commit Clairs et precis avant de faire un Push de la branche : git push origin <maBranche>
 5. Mettez a jour vos issues
 5. Faites un *Pull Request* et attendez sa validation
 
@@ -34,6 +35,7 @@
     - Issue Correctement commentées et documentées
     - pull Request OBLIGATOIRE
     - Seul le chef de projet peu faire un "merge" sur "master" après révision de votre code.
+    - Faire un update sur le code principal : git pull origin master
 
    # 4) Tests unitaires et fonctionnels
     - PhpUnit est à votre disposition pour créer vos tests
