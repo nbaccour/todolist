@@ -69,13 +69,6 @@ class UserControllerTest extends AbstractControllerTest
         ]);
 
         $this->client->submit($form);
-//        self::assertEquals(200, $this->client->getResponse()->getStatusCode());
-//        $crawler = $this->client->followRedirect();
-//        self::assertEquals('user_resetPassword', $this->client->getRequest()->get('_route'));
-//        self::assertEquals(
-//            'Votre mot de passe a été modifié',
-//            $crawler->filter('div.alert.alert-success')->text(null, true)
-//        );
 
     }
 
@@ -109,8 +102,8 @@ class UserControllerTest extends AbstractControllerTest
 
         $buttonCrawlerMode = $crawler->filter('form');
         $form = $buttonCrawlerMode->form([
-            'user[username]'      => 'admin550',
-            'user[email]'         => 'admin550@gmail.com',
+            'user[username]'      => 'admin55',
+            'user[email]'         => 'admin55@gmail.com',
             'user[password]'      => 'password',
             'user[verifPassword]' => 'password',
             'user[roles]'         => 'ROLE_ADMIN',
@@ -126,21 +119,21 @@ class UserControllerTest extends AbstractControllerTest
             $crawler->filter('div.alert.alert-success')->text(null, true)
         );
 
-        $user = $this->userRepository->findOneBy(['username' => 'admin550']);
+        $user = $this->userRepository->findOneBy(['username' => 'admin55']);
         self::assertInstanceOf(Usertd::class, $user);
-        self::assertEquals('admin550', $user->getUsername());
-        self::assertEquals('admin550@gmail.com', $user->getEmail());
+        self::assertEquals('admin55', $user->getUsername());
+        self::assertEquals('admin55@gmail.com', $user->getEmail());
         self::assertEquals('ROLE_ADMIN', $user->getRoles()[0]);
     }
 
     public function testDelete(): void
     {
-        $this->client->request('DELETE', '/admin/user/delete/119');
+        $this->client->request('DELETE', '/admin/user/delete/28');
         self::assertEquals(302, $this->client->getResponse()->getStatusCode());
 
         $this->loginWithAdmin();
 
-        $this->client->request('DELETE', '/admin/user/delete/119');
+        $this->client->request('DELETE', '/admin/user/delete/28');
         self::assertEquals(302, $this->client->getResponse()->getStatusCode());
         $crawler = $this->client->followRedirect();
         self::assertEquals('user_show', $this->client->getRequest()->get('_route'));
@@ -149,18 +142,18 @@ class UserControllerTest extends AbstractControllerTest
             $crawler->filter('div.alert.alert-warning')->text(null, true)
         );
 
-        $user = $this->userRepository->findOneBy(['email' => 'admin55@gmail.com']);
+        $user = $this->userRepository->findOneBy(['email' => 'test1@test1.fr']);
         self::assertEmpty($user);
     }
 
     public function testModify(): void
     {
-        $this->client->request('GET', '/admin/user/modify/97');
+        $this->client->request('GET', '/admin/user/modify/26');
         self::assertEquals(302, $this->client->getResponse()->getStatusCode());
 
         $this->loginWithAdmin();
 
-        $crawler = $this->client->request('GET', '/admin/user/modify/97');
+        $crawler = $this->client->request('GET', '/admin/user/modify/26');
         self::assertEquals(200, $this->client->getResponse()->getStatusCode());
         self::assertContains("Modifier les données de l'utilisateur",
             [$crawler->filter('button.btn.btn-success')->text()]);
@@ -169,7 +162,7 @@ class UserControllerTest extends AbstractControllerTest
         $buttonCrawlerMode = $crawler->filter('form');
         $form = $buttonCrawlerMode->form([
             'usermodify[username]' => 'modifTabitha',
-            'usermodify[email]'    => 'modifuser0@gmail.com',
+            'usermodify[email]'    => 'modifuser@gmail.com',
             'usermodify[roles]'    => 'ROLE_ADMIN',
         ]);
 
@@ -186,7 +179,7 @@ class UserControllerTest extends AbstractControllerTest
         $user = $this->userRepository->findOneBy(['username' => 'modifTabitha']);
         self::assertInstanceOf(Usertd::class, $user);
         self::assertEquals('modifTabitha', $user->getUsername());
-        self::assertEquals('modifuser0@gmail.com', $user->getEmail());
+        self::assertEquals('modifuser@gmail.com', $user->getEmail());
         self::assertEquals('ROLE_ADMIN', $user->getRoles()[0]);
     }
 

@@ -84,12 +84,12 @@ class TaskControllerTest extends AbstractControllerTest
 
     public function testEdit(): void
     {
-        $this->client->request('GET', '/tasks/modify/61');
+        $this->client->request('GET', '/tasks/modify/81');
         self::assertEquals(302, $this->client->getResponse()->getStatusCode());
 
         $this->loginWithAdmin();
 
-        $crawler = $this->client->request('GET', '/tasks/modify/61');
+        $crawler = $this->client->request('GET', '/tasks/modify/81');
         self::assertEquals(200, $this->client->getResponse()->getStatusCode());
         self::assertCount(3, $crawler->filter('input'));
         self::assertEquals('Modifier les données de la tache', $crawler->filter('button.btn.btn-success')->text());
@@ -118,12 +118,12 @@ class TaskControllerTest extends AbstractControllerTest
 
     public function testDelete(): void
     {
-        $this->client->request('DELETE', '/tasks/delete/61');
+        $this->client->request('DELETE', '/tasks/delete/83');
         self::assertEquals(302, $this->client->getResponse()->getStatusCode());
 
         $this->loginWithAdmin();
 
-        $this->client->request('DELETE', '/tasks/delete/61');
+        $this->client->request('DELETE', '/tasks/delete/83');
         self::assertEquals(302, $this->client->getResponse()->getStatusCode());
         $crawler = $this->client->followRedirect();
         self::assertEquals('task_mytask', $this->client->getRequest()->get('_route'));
@@ -132,7 +132,7 @@ class TaskControllerTest extends AbstractControllerTest
             $crawler->filter('div.alert.alert-warning')->text(null, true)
         );
 
-        $task = $this->taskRepository->findOneBy(['title' => 'tache de test']);
+        $task = $this->taskRepository->findOneBy(['title' => 'Titre de la tâche modif']);
         self::assertEmpty($task);
     }
 }

@@ -59,17 +59,9 @@ class SecurityControllerTest extends AbstractControllerTest
         // Test if home page text when authenticated exists
         static::assertSame("Liste des tâches", $crawler->filter('h1')->text());
 
-//        echo $this->client->getResponse()->getContent();
     }
 
-    public function testLogout()
-    {
-        $crawler = $this->client->request('POST', '/logout');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
-        static::assertSame("Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !",
-            $crawler->filter('h1')->text());
-    }
 
 
 }

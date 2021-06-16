@@ -34,12 +34,12 @@ class AppFixtures extends Fixture
 
         $manager->persist($admin);
 
-        $user = new Usertd();
-        $hash = $this->encoder->encodePassword($user, "demo");
-        $user->setEmail('demo@gmail.com')
+        $demo = new Usertd();
+        $hash = $this->encoder->encodePassword($demo, "demo");
+        $demo->setEmail('demo@gmail.com')
             ->setUsername($faker->firstName())
             ->setPassword($hash);
-        $manager->persist($user);
+        $manager->persist($demo);
 
         $user = new Usertd();
         $hash = $this->encoder->encodePassword($user, "demoanonyme");
@@ -50,6 +50,7 @@ class AppFixtures extends Fixture
         $manager->persist($user);
 
         $aUser[] = $user;
+
         for ($u = 0; $u < 10; $u++) {
             $user = new Usertd();
             $hash = $this->encoder->encodePassword($user, "password");
@@ -61,7 +62,7 @@ class AppFixtures extends Fixture
             $aUser[] = $user;
         }
 
-        for ($u = 0; $u < 30; $u++) {
+        for ($u = 0; $u < 50; $u++) {
             $task = new Task();
             $task->setTitle($faker->jobTitle())
                 ->setContent($faker->paragraph())
