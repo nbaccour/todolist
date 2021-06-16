@@ -25,23 +25,23 @@
     - Les conventions du code de Symfony (`https://symfony.com/doc/5.2/contributing/code/conventions.html`)
 
    # 2. les bundles
-    - Toute installation de bundle PHP doit se faire avec **Composer OBLIGATOIREMENT**
+    - Toute installation de bundle PHP doit se faire avec "Composer OBLIGATOIREMENT"
 
    # 3. Git
     Vous devez faire les choses dans cet ordre : 
-    - Nouvelle branche a partir de master duement nomée
+    - Nouvelle branche à partir de master duement nomée
     - Commit Correctement commentés
     - Issue Correctement commentées et documentées
     - pull Request OBLIGATOIRE
-    - Seul le chef du projet peu faire un merge sur "master" après revision de votre code
+    - Seul le chef de projet peu faire un "merge" sur "master" après revision de votre code
 
-   # 4) Tests unitaires et fonctionels
+   # 4) Tests unitaires et fonctionnels
     - PhpUnit est à votre disposition pour créer vos tests
-    - Toute nouvelle fonctionalité doit avoir des tests associés
+    - Toute nouvelle fonctionnalité doit avoir des tests associés
     - Vous devez respecter un taux de couverture au delà de 70%
 
    # 5) Diagramme UML
-    - Réalisez des diagrammes UML (UseCase, Class, Sequence) pour les nouvelles fonctionalités
+    - Réalisez des diagrammes UML (UseCase, Class, Sequence) pour les nouvelles fonctionnalités
 
    # 6) Architecture de fichier
     - Respectez l'architecture de symfony 5 pour vos fichiers PHP ( src\Controller\... )
