@@ -9,12 +9,12 @@
 # Comment Contribuer au projet
 
 1. Cloner et Installer le repository sur votre serveur (voir le README.md)
-2. Créez une branche A PARTIR DU MASTER a votre nom avec la fonction sur laquelle vous intervenez
+2. Créez une branche à partir de *master* avec la fonction sur laquelle vous intervenez
 3. Ecrivez un Issue sur les modifications que vous allez apporter
 4. Ecrivez votre code EN RESPECTANT LES BONNES PRATIQUES
-5. Ecrivez des Commit Clairs et precis avant de Push votre code
+5. Ecrivez des Commit Clairs et precis avant de faire un Push de la branche
 5. Mettez a jour vos issues
-5. Faites une PullRequest et attendez sa validation
+5. Faites un *Pull Request* et attendez sa validation
 
 # Les bonnes pratiques 
 
