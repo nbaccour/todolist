@@ -33,7 +33,7 @@
     - Commit Correctement commentés
     - Issue Correctement commentées et documentées
     - pull Request OBLIGATOIRE
-    - Seul le chef de projet peu faire un "merge" sur "master" après revision de votre code
+    - Seul le chef de projet peu faire un "merge" sur "master" après révision de votre code.
 
    # 4) Tests unitaires et fonctionnels
     - PhpUnit est à votre disposition pour créer vos tests
@@ -45,7 +45,7 @@
 
    # 6) Architecture de fichier
     - Respectez l'architecture de symfony 5 pour vos fichiers PHP ( src\Controller\... )
-    - Les vues devront etre dans le repertoire templates.
+    - Les vues devront être dans le repertoire templates.
 
 
 
