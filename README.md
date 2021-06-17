@@ -6,7 +6,7 @@
 1. Symfony 5.2.9
 2. PHP 7.4.13
 3. PHP unit
-4. 
+4. blackfire
 5. 
 
 # Installation

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Accès interdit</h1>
+    <p>Vous n'avez pas la permission de voir cette page</p>
+    <p>Le code est : {{status_code}}</p>
+    {#<p>Le texte est : {{status_text}}</p>#}
+    <p>Message : {{exception.message}}</p>
+    <p>
+       <a href="{{ path('home') }}">Voir Accueil</a>.
+    </p>
+{% endblock %}
