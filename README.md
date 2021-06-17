@@ -6,8 +6,8 @@
 1. Symfony 5.2.9
 2. PHP 7.4.13
 3. PHP unit
-4. blackfire
-5. 
+4. Blackfire
+5. Code coverage
 
 # Installation
 
@@ -19,15 +19,17 @@
 6. Jouez les fixtures : `php bin/console d:f:l --no-interaction`
 7. Lancez le server : `symfony serve` ou `php -S localhost:8000 -t public`
 
-# Tests unitaires
+# Tests unitaires et fonctionnels
 
-Des tests unitaires et fonctionnels sont présents dans le projet dans le répertoire /tests 
+- Répertoire : `/tests`
 
-`php bin/phpunit`
 
-# Qualité du code
-`
+# Code coverage
+`1. lien : `https://127.0.0.1:8000/docs/code-coverage/`
 
-# Lien Documentation en locale
+# Liens Documentations en locale
+
+2. Comment contribuer au projet : `/docs/CONTRIBUTE.md`
+3. Audit de qualité de code et de performance : `/docs/audit-performance.pdf`
 
 
