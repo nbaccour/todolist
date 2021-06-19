@@ -1,10 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Page not found 2</h1>
-
+    <h1>Page non trouvée</h1>
+    <p>La page que vous cherchez n'a pas été trouvée</p>
+    <p>Le code est : {{ status_code }}</p>
+    {#<p>Le texte est : {{status_text}}</p>#}
+    <p>Message : {{ exception.message }}</p>
     <p>
-        The requested page couldn't be located. Checkout for any URL
-        misspelling or <a href="{{ path('home') }}">return to the homepage</a>.
+        <a href="{{ path('home') }}">Voir Accueil</a>.
     </p>
 {% endblock %}

@@ -25,10 +25,11 @@
 
 
 # Code coverage
-`1. lien : `https://127.0.0.1:8000/docs/code-coverage/`
+`1. lien : `https://127.0.0.1:8000/docs/code-coverage/
 
-# Liens Documentations en locale
+# Liens Documentations
 
+1. Authentification : `/docs/AuthentificationGuide.pdf`
 2. Comment contribuer au projet : `/docs/CONTRIBUTE.md`
 3. Audit de qualité de code et de performance : `/docs/audit-performance.pdf`
 
