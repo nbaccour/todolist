@@ -32,5 +32,6 @@
 1. Authentification : `/docs/AuthentificationGuide.pdf`
 2. Comment contribuer au projet : `/docs/CONTRIBUTE.md`
 3. Audit de qualité de code et de performance : `/docs/audit-performance.pdf`
+4. Code coverage : `/docs/code-coverage.PNG`
 
 
