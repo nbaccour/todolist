@@ -102,8 +102,8 @@ class UserControllerTest extends AbstractControllerTest
 
         $buttonCrawlerMode = $crawler->filter('form');
         $form = $buttonCrawlerMode->form([
-            'user[username]'      => 'admin55',
-            'user[email]'         => 'admin55@gmail.com',
+            'user[username]'      => 'admin552',
+            'user[email]'         => 'admin552@gmail.com',
             'user[password]'      => 'password',
             'user[verifPassword]' => 'password',
             'user[roles]'         => 'ROLE_ADMIN',
@@ -119,10 +119,10 @@ class UserControllerTest extends AbstractControllerTest
             $crawler->filter('div.alert.alert-success')->text(null, true)
         );
 
-        $user = $this->userRepository->findOneBy(['username' => 'admin55']);
+        $user = $this->userRepository->findOneBy(['username' => 'admin552']);
         self::assertInstanceOf(Usertd::class, $user);
-        self::assertEquals('admin55', $user->getUsername());
-        self::assertEquals('admin55@gmail.com', $user->getEmail());
+        self::assertEquals('admin552', $user->getUsername());
+        self::assertEquals('admin552@gmail.com', $user->getEmail());
         self::assertEquals('ROLE_ADMIN', $user->getRoles()[0]);
     }
 
