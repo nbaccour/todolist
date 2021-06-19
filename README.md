@@ -1,4 +1,4 @@
-# Projet : Améliorez une application existante de ToDo & Co
+# Améliorez une application existante de ToDo & Co
 
 
 # Technologie utilisée
