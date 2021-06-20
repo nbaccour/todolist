@@ -33,7 +33,13 @@
 2. Comment contribuer au projet : `/docs/CONTRIBUTE.md`
 3. Audit de qualité de code et de performance : `/docs/audit-performance.pdf`
 4. Code coverage : `/docs/code-coverage.PNG`
+5. Qualité de code : `https://app.codacy.com/gh/nbaccour/todolist/dashboard`
+6. Proposition évolution de l'application : `/docs/proposition-evolution-application.pdf`
 
+
+# Lien Projet
+
+1. lien : `http://nizarbaccour.fr/todolist/public/`
 
 # Connexion
 
