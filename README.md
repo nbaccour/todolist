@@ -43,7 +43,7 @@
 
 # Connexion
 
-1. admin : `admin@gmail.com`:`password`
-2. demo-user : `demo@gmail.com`:`demo`
+
+ demo-user : `demo@gmail.com`:`demo`
 
 
